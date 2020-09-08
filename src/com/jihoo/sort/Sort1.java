@@ -1,9 +1,9 @@
-package com.jihoo;
+package com.jihoo.sort;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.PriorityQueue;
+import java.lang.reflect.Array;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * 배열 array의 i번째 숫자부터 j번째 숫자까지 자르고 정렬했을 때, k번째에 있는 수를 구하려 합니다.
@@ -31,6 +31,15 @@ import java.util.PriorityQueue;
 public class Sort1 {
     public int[] solution(int[] array, int[][] commands) {
         int[] answer = {};
+        List<Integer> answerList = new ArrayList<>();
+        for(int[] command : commands){
+             List<Integer> list = Arrays.stream(command).boxed().collect(Collectors.toList());
+            int[] slice = IntStream.range(list.get(0)-1, list.get(1)).map(i -> array[i]).toArray();
+//            List<Integer> slicelist = Arrays.stream(slice).boxed().collect(Collectors.toList());
+            Arrays.sort(slice);
+            answerList.add(slice[list.get(2)-1]);
+        }
+        answer = answerList.stream().mapToInt(i -> i).toArray();
         return answer;
     }
 
