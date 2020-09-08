@@ -1,9 +1,6 @@
 package com.jihoo.sort;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -21,6 +18,39 @@ import java.util.stream.Collectors;
  *
  */
 public class Sort2 {
+
+    public class Number implements Comparable<Number> {
+        public int getA() {
+            return a;
+        }
+
+        public int getB() {
+            return b;
+        }
+
+        private int a;
+        private int b;
+
+        public Number(int a, int b) {
+            this.a = a;
+            this.b = b;
+        }
+
+
+        @Override
+        public int compareTo(Number num) {
+        return num.a - this.a;
+        }
+
+        @Override
+        public String toString() {
+            return "Number{" +
+                    "a=" + a +
+                    ", b=" + b +
+                    '}';
+        }
+    }
+    
     public String solution(int[] numbers) {
         String answer = "";
 //        List<Integer> list = Arrays.stream(numbers).boxed().collect(Collectors.toList());
@@ -31,36 +61,38 @@ public class Sort2 {
 //            bList[i] = b;
 //        }
 
-        Integer[][] aList = new Integer[numbers.length][2];
+        Number[] aList = new Number[numbers.length];
 
         for (int i = 0; i < numbers.length; i++) {
-            Integer[] temp = new Integer[2];
-            int number = numbers[i];
+            int n = numbers[i];
             String value = "";
-            String b = number+"";
-            for (int j = 0; j < 4; j++) {
+            String b = n+"";
+            for (int j = 0; j < 5; j++) {
                 value += b;
             }
-            temp[0] = Integer.parseInt(value.substring(0,4));
-            temp[1] = number;
-            aList[i] = temp;
+
+            Number number = new Number(Integer.parseInt(value.substring(0,5)), n);
+            aList[i] = number;
 
         }
 
-        Arrays.sort(aList, Collections.reverseOrder());
+        Arrays.sort(aList);
 
-        for (int i = 0; i < aList.length; i++) {
-            Integer[] temp = aList[i];
 
-            for (Integer j: temp){
-                System.out.print(j);
-                System.out.println(" ,");
-            }
-
-        }
 
 //        List<Integer> list = Arrays.stream(aList).collect(Collectors.toList());
-//        System.out.println("list " +list);
+//        System.out.println("list " + aList);
+
+        for (Number num: aList){
+            System.out.println(num.toString());
+            answer += num.getB()+"";
+        }
+
+        System.out.println(answer);
+
+        if(answer.startsWith("0")){
+            answer = "0";
+        }
 
         return answer;
     }
