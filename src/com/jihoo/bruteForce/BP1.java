@@ -39,7 +39,34 @@ import java.util.stream.IntStream;
 public class BP1 {
     public int[] solution(int[] answers) {
         int[] answer = {};
-        return answer;
+
+        int[] person1 = {1, 2, 3, 4, 5};
+        int[] person2 = {2, 1, 2, 3, 2, 4, 2, 5};
+        int[] person3 = {3, 3, 1, 1, 2, 2, 4, 4, 5, 5};
+
+        int cnt1=0, cnt2=0, cnt3=0;
+        int idx1=0, idx2=0, idx3=0;
+
+        for (int i = 0; i < answers.length; i++) {
+            idx1= i%5;
+            idx2= i%8;
+            idx3= i%10;
+            if(answers[i] == person1[idx1])  cnt1++;
+            if(answers[i] == person2[idx2])  cnt2++;
+            if(answers[i] == person3[idx3])  cnt3++;
+        }
+
+
+        int maxCnt = Math.max(cnt1, Math.max(cnt2, cnt3));
+
+        List<Integer> list = new ArrayList<>();
+        if(maxCnt == cnt1) list.add(1);
+        if(maxCnt == cnt2) list.add(2);
+        if(maxCnt == cnt3) list.add(3);
+
+        int[] arr = list.stream().mapToInt(i -> i).toArray();
+
+        return arr;
     }
 }
 
