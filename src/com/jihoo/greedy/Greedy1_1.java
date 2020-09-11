@@ -30,56 +30,39 @@ import java.util.stream.Collectors;
  * 예제 #2
  * 3번 학생이 2번 학생이나 4번 학생에게 체육복을 빌려주면 학생 4명이 체육수업을 들을 수 있습니다.
  */
-public class Greedy1 {
+public class Greedy1_1 {
     public int solution(int n, int[] lost, int[] reserve) {
         int answer = 0;
 
-        // 체육복 빌린 학생수
-        int bp = 0;
+        int[] arr = new int[30];
 
-        // 여벌 체육복을 도난당한 학생수
-        int sp = 0;
+        for (int i = 0; i < n; i++) {
+            arr[i] = 1;
+        }
 
-        List<Integer> lostList = Arrays.stream(lost).boxed().collect(Collectors.toList());
-        List<Integer> reserveList = Arrays.stream(reserve).boxed().collect(Collectors.toList());
+        for (int i = 0; i < lost.length; i++) {
+            int v = arr[lost[i]-1] -1;
+            arr[lost[i]-1] = v;
+        }
 
-        for (int i = lost.length-1; i >= 0; i--) {
-            int lostPerson = lost[i];
+        for (int i = 0; i < reserve.length; i++) {
+            int v = arr[reserve[i]-1] +1;
+            arr[reserve[i]-1] = v;
+        }
 
-            for (int j = 0; j < reserveList.size(); j++) {
-                int reservePerson = reserveList.get(j);
-
-                if(lostPerson  == reservePerson ) {
-                    reserveList.remove(j);
-                    lostList.remove(i);
-                    sp++;
-                    break;
-                }
+        for (int i = 0; i < n; i++) {
+            if (arr[i] == 2 && i > 0 && arr[i-1] == 0) {
+                arr[i]--;
+                arr[i-1]++;
+            }
+            if (arr[i] == 2 && i < n && arr[i+1] == 0) {
+                arr[i]--;
+                arr[i+1]++;
             }
         }
 
+        for (int i = 0; i < n; i++) if (arr[i] > 0) answer++;
 
-        for (int i = 0; i < lostList.size(); i++) {
-            int lostPerson = lost[i];
-
-            for (int j = 0; j < reserveList.size(); j++) {
-                int reservePerson = reserveList.get(j);
-
-                if(lostPerson -1 == reservePerson || lostPerson +1 == reservePerson) {
-                    System.out.println("reservePerson "+reservePerson +" lostPerson "+lostPerson+" "+reserveList);
-
-                    reserveList.remove(j);
-                    bp++;
-
-                    System.out.println(bp);
-                    break;
-                }
-            }
-        }
-
-        answer = (n - lost.length) + bp + sp;
-
-        System.out.println("=================");
 
         return answer;
     }
