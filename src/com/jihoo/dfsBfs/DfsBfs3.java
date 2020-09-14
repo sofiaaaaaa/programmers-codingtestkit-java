@@ -1,5 +1,8 @@
 package com.jihoo.dfsBfs;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  * 단어 변환
  *
@@ -29,9 +32,62 @@ package com.jihoo.dfsBfs;
  * target인 cog는 words 안에 없기 때문에 변환할 수 없습니다.
  */
 public class DfsBfs3 {
+    ArrayList<Integer> visit = new ArrayList<>();
+    ArrayList<Integer> res = new ArrayList<>();
+    
     public int solution(String begin, String target, String[] words) {
         int answer = 0;
+
+        int count = 0;
+        for(String word : words){
+            if(word.equals(target)){
+                count ++;
+            }
+        }
+        if(count == 0) {
+            return 0;
+        }
+
+        for (int i = 0; i < words.length; i++) {
+            visit.add(0);
+        }
+
+        this.dfs(words, begin, target, 0);
+        System.out.println("===="+res);
+        if (res.size() != 0) {
+            answer = Collections.min(res);
+        }
+
         return answer;
+    }
+    
+    private void dfs(String[] words, String word, String target, int depth){
+        int co = 0;
+        if( word.equals(target)){
+            res.add(depth);
+            return;
+        }
+
+        for (int i = 0; i < words.length; i++) {
+            if(visit.get(i) == 1){
+                continue;
+            }
+            co = 0;
+            for (int j = 0; j < word.length(); j++) {
+                if( word.charAt(j) != words[i].charAt(j)){
+                    System.out.println(i+" "+j+" "+word+" "+words[i]+" "+ word.charAt(j) +" "+ words[i].charAt(j)+" "+co);
+
+                    co++;
+                }
+            }
+
+            if(co == 1){
+                visit.set(i, 1);
+                this.dfs(words, words[i], target, depth+1);
+                visit.set(i, 0);
+            }
+
+        }
     }
 }
 
