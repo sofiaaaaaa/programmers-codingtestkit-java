@@ -1,4 +1,4 @@
-package com.jihoo.sample;
+package com.practice.sample;
 
 public class ArrayListSample {
 
