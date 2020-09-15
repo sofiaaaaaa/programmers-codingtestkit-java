@@ -8,8 +8,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class BinarySearchTest {
     @Test
     void solution() {
-        Greedy6 g = new Greedy6();
-        assertEquals(2, g.solution(new int[][]{new int[]{-20,15}, new int[]{-14,-5}, new int[]{-18,-13}, new int[]{-5,-3}}), "test1");
+//        BinarySearch1 b = new BinarySearch1();
+//        assertEquals(28, b.solution(6, new int[]{7, 10}));
+
+        BinarySearch2 b = new BinarySearch2();
+        assertEquals(4, b.solution(25, new int[]{2, 14, 11, 21, 17}, 2));
+
     }
 }
 
